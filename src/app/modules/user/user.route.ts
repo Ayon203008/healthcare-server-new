@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { userController } from "./user.controller";
+import { validateRequest } from "../../middleware/validateRequest";
+import { createDoctorZodSchema } from "./userValidation";
 
-const router=Router()
+const router = Router()
 
-router.post("/create-doctor",userController.createDoctor)
-
-export const UserRoutes=router
+router.post("/create-doctor", validateRequest(createDoctorZodSchema), userController.createDoctor)
+export const UserRoutes = router
