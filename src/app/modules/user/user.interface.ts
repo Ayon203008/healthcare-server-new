@@ -1,25 +1,22 @@
+import { Gender } from "../../../generated/prisma/client"
 
-enum Gender {
-    MALE = "MALE",
-    FEMALE = "FEMALE",
+export interface IDoctor {
+    name: string
+    email: string
+    contactNumber?: string
+    address?: string
+    registrationNumber: string
+    experience: number
+    gender: Gender
+    appointmentFee: number
+    qualification: string
+    currentWorkingPlace: string
+    designation: string
+    profilePhoto?: string
 }
 
 export interface ICreateDoctorPayload {
     password: string
-    doctor: {
-        password: string
-        name: string,
-        email: string,
-        profilePhoto: string,
-        contactNumber: string,
-        address: string,
-        registrationNumber: string,
-        expreience: number,
-        gender: Gender,
-        appointmentFee: string,
-        qualification: string,
-        currentWorkingPlace: string,
-        designation: string
-    }
-    speacialties: string[]
+    doctor: IDoctor
+    specialties: string[]
 }

@@ -1,5 +1,6 @@
 model Patient {
-    id            String    @id @default(uuid())
+    id String @id @default(uuid(7))
+
     name          String
     email         String    @unique
     profilePhoto  String?
@@ -10,12 +11,12 @@ model Patient {
     createdAt     DateTime  @default(now())
     updatedAt     DateTime  @updatedAt
 
-    // relations
+    //relations
+
     userId String @unique
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-
-    @@index([email],name:"idx_patient_email")
-    @@index([isDeleted],name:"idx_patient_isDeleted")
+    @@index([email], name: "idx_patient_email")
+    @@index([isDeleted], name: "idx_patient_isDeleted")
     @@map("patient")
 }
