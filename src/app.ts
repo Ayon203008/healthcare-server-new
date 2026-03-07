@@ -6,11 +6,13 @@ import { envVars } from "./config/env";
 import status from "http-status";
 import { globalErrorHandler } from "./app/middleware/globalErrorHandler";
 import { notFound } from "./app/middleware/notFound";
+import cookieParser from 'cookie-parser'  // note the hyphen, not camelCase
 
 const app: Application = express();
 // app.all("/api/auth/*", toNodeHandler(auth));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser())
 
 app.use("/api/v1", IndexRoutes)
 

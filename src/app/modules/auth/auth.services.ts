@@ -1,5 +1,6 @@
 import { auth } from "../../lib/auth";
 import { prisma } from "../../lib/prisma";
+import { tokenUtils } from "../../utils/token";
 interface IRegisterPatientPayload {
     name: string,
     email: string,
@@ -30,9 +31,32 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
         })
         return patientTx
     })
+        const accessToken=tokenUtils.getAccessToken({
+        userId:data.user.id,
+        role:data.user.role,
+        status:data.user.status,
+        needPasswordChanged:data.user.needPasswordChanged,
+        isDeleted:data.user.isDeleted,
+        email:data.user.email,
+        name:data.user.name,
+    })
+
+
+    const refreshaToken=tokenUtils.getRefreshToken({
+        userId:data.user.id,
+        role:data.user.role,
+        status:data.user.status,
+        needPasswordChanged:data.user.needPasswordChanged,
+        isDeleted:data.user.isDeleted,
+        email:data.user.email,
+        name:data.user.name,
+    })
+
     return {
         ...data,
-        patient
+        patient,
+        accessToken,
+        refreshaToken
     }
 
 }
@@ -51,7 +75,34 @@ const loginUser=async(payload:ILoginPayload)=>{
         }
     })
 
-    return data
+
+    const accessToken=tokenUtils.getAccessToken({
+        userId:data.user.id,
+        role:data.user.role,
+        status:data.user.status,
+        needPasswordChanged:data.user.needPasswordChanged,
+        isDeleted:data.user.isDeleted,
+        email:data.user.email,
+        name:data.user.name,
+    })
+
+
+    const refreshaToken=tokenUtils.getRefreshToken({
+        userId:data.user.id,
+        role:data.user.role,
+        status:data.user.status,
+        needPasswordChanged:data.user.needPasswordChanged,
+        isDeleted:data.user.isDeleted,
+        email:data.user.email,
+        name:data.user.name,
+    })
+
+
+    return {
+        ...data,
+        accessToken,
+        refreshaToken
+    }
 }
 
 export const authServices = {
